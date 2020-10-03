@@ -1,27 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 
+function EmpRow(props) {
 
-class EmpRow extends Component({thumbnail, name, phone, email, dob}) {
-    constructor(props){
-        this.image = {thumbnail};
-        this.name = {name};
-        this.phone = {phone};
-        this.email = {email};
-        this.dob = {dob};
-    }
-    render() {
-        return (
-            <>
-                <tr>
-                    <td><img src ={this.image}/></td>
-                    <td>{this.name}</td>
-                    <td>{this.phone}</td>
-                    <td>{this.email}</td>
-                    <td>{this.dob}</td>
-                </tr>
-            </>
-        );
-    }
+    return (
+        <>
+            <tr>
+                <td>{props.img}</td>
+                <td>{props.name}</td>
+                <td>{props.phone}</td>
+                <td>{props.email}</td>
+                <td>{props.dob}</td>
+            </tr>
+        </>
+    );
+
 }
 
 export default EmpRow;

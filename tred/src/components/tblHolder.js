@@ -1,30 +1,31 @@
 import React, {Component} from "react";
 import axios from "axios";
 import "./tblHolder.css";
-import API from "../util/API"
-// import EmpRow from "./EmpRow"
+import EmpRow from "./EmpRow"
 
 class Holder extends Component {
   state = {
     search: "",
-    results:[]
+    results: []
   };
-
-  constructRows(){
-    
-  }
-
   componentDidMount() {
-    axios.get("https://randomuser.me/api/?results=50")
+    axios.get('https://randomuser.me/api/?results=10&inc=name,registered,picture,cell,email')
     .then(res=>{
       console.log(res.data.results)
       let rslt = res.data.results;
-      this.results = rslt;
-      console.log(this.results);
-    })
-    .catch(err=> console.log(err));
-    
+      rslt.data.results.map(empList=>({
+        image: `${empList.picture.thumbnail}`,
+        name: `${empList.name.first}${empList.name.last}`,
+        phone: `${empList.cell}`,
+        email: `${empList.email}`,
+        dob: `${empList.dob.date}`    
+      }));
+      console.log(JSON.parse(rslt));
+      this.results=JSON.parse(rslt);
+      
+    }).catch(err=> console.log(err));
   }
+
 
   render() {
     return (
@@ -39,10 +40,10 @@ class Holder extends Component {
               <th>DOB</th>
             </tr>
           </thead>
-
           <tbody>
-
-
+            {this.state.results.map(emp =>(
+              <EmpRow img= {this.results.picture.thumbnail}/> 
+            ))}
           </tbody>
         </table>
       </>

@@ -1,8 +1,29 @@
 import React from "react";
 import "./tblHolder.css";
-import EmpRow from "./EmpRow.js" 
+import API from "../util/API"
+// import EmpRow from "./EmpRow.js" 
+// import  EmployeeList from "./EmployeeList";
+
+//  function GenerateEmpLst(){
+//    return <EmployeeList />;
+//  }
 
 function Holder() {
+  //const empList = GenerateEmpLst();
+  // console.log(empList);
+  function componentDidMount(){
+    getEmployeeList();
+  }
+
+  let getEmployeeList =()=>{
+    let emp = API.getUsers();
+    // let emplist = result.data.results;
+    console.log(emp);
+    console.log(emp.data);
+  }
+
+  componentDidMount();
+
   return (
     <>
       <table className="blueTable">
@@ -17,10 +38,7 @@ function Holder() {
         </thead>
 
         <tbody>
-          <EmpRow />
-          <EmpRow />
-          <EmpRow />
-          <EmpRow />
+         
           
         </tbody>
       </table>

@@ -1,13 +1,16 @@
 import React from "react";
 import "./style.css";
+import { Navbar } from 'reactstrap';
 
 
 function Navigationbar(){
-    const st = { background: 'blue' };
+    
     return(
-        <navbar style = {st} className ="myNavBar">
-            <h1 className="h1Color">Employee Directory</h1>
-        </navbar> 
+        <div>
+            <Navbar className="myNavBar">
+                <h1 className="h1Color">Employee Directory</h1>
+            </Navbar>
+        </div>
     )
 
 }

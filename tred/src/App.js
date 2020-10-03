@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/header.js";
- import Navigationbar from "./components/Navigationbar.js";
+import Navigationbar from "./components/Navigationbar.js";
 import Holder from "./components/tblHolder.js";
-import SearchBar from "./components/SearchBar.js";
+import SearchBar from "./components/SearchBar.js"; //will need to employe react router here
+
 
 function App() {
   return (

@@ -1,49 +1,37 @@
-import React from "react";
+import React, {Component} from "react";
 import "./tblHolder.css";
 import API from "../util/API"
-// import EmpRow from "./EmpRow.js" 
-// import  EmployeeList from "./EmployeeList";
+// import EmpRow from "./EmpRow"
 
-//  function GenerateEmpLst(){
-//    return <EmployeeList />;
-//  }
-
-function Holder() {
-  //const empList = GenerateEmpLst();
-  // console.log(empList);
-  function componentDidMount(){
-    getEmployeeList();
-  }
-
-  let getEmployeeList =()=>{
+class Holder extends Component {
+  componentDidMount() {
     let emp = API.getUsers();
-    // let emplist = result.data.results;
-    console.log(emp);
-    console.log(emp.data);
+    console.log(emp); //PromiseResult.data
+
   }
 
-  componentDidMount();
+  render() {
+    return (
+      <>
+        <table className="blueTable">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>DOB</th>
+            </tr>
+          </thead>
 
-  return (
-    <>
-      <table className="blueTable">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>DOB</th>
-          </tr>
-        </thead>
+          <tbody>
 
-        <tbody>
-         
-          
-        </tbody>
-      </table>
-    </>
-  );
+
+          </tbody>
+        </table>
+      </>
+    );
+  }
 }
 
 

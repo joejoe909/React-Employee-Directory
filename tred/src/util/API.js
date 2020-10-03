@@ -2,7 +2,11 @@ import axios from "axios";
 
 export default{
     getUsers: ()=>{
-        return axios.get("https://randomuser.me/api/?results=200&nat=us");
+        axios.get("https://randomuser.me/api/?results=50&inc=picture&inc=name&inc=email&inc=phone&inc=dob")
+            .then(function res(){
+                console.log(res);
+                return JSON.stringify(res);
+            });
     }
 
 };

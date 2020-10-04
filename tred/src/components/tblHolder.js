@@ -1,55 +1,92 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import "./tblHolder.css";
 import EmpRow from "./EmpRow"
+import SearchBar from "./SearchBar.js"; //will need to employe react router here
 
 class Holder extends Component {
-  state = {
-    search: "",
-    results: []
-  };
-  componentDidMount() {
-    axios.get('https://randomuser.me/api/?results=10&inc=name,registered,picture,cell,email')
-    .then(res=>{
-      console.log(res.data.results)
-      let rslt = res.data.results;
-      rslt.data.results.map(empList=>({
-        image: `${empList.picture.thumbnail}`,
-        name: `${empList.name.first}${empList.name.last}`,
-        phone: `${empList.cell}`,
-        email: `${empList.email}`,
-        dob: `${empList.dob.date}`    
-      }));
-      console.log(JSON.parse(rslt));
-      this.results=JSON.parse(rslt);
-      
-    }).catch(err=> console.log(err));
+  constructor() {
+    super()
+    this.state = {
+      search: "",   //stores original list from API.
+      results: []
+    };
   }
 
+  //https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
+  componentDidMount() {
+    axios.get('https://randomuser.me/api/?results=10&inc=name,registered,picture,cell,email,dob')
+      .then(res => res.data.results.map(result => (
+        {
+          image: `${result.picture.thumbnail}`,
+          name: `${result.name.first} ${result.name.last}`,
+          phone: `${result.cell}`,
+          email: `${result.email}`,
+          dob: `${result.dob.date}`,
+          id: result.registered
+        }
+      ))).then(newData => {
+        this.setState({ store: newData, results: newData })
+      }
+      )
+      .catch(err => console.log(err));
+    console.log(this.state.results);
+    this.checkResults();
+  }
+
+  checkResults() {
+    console.log(this.state.results);
+  }
+
+  filterResults(e) {
+        const {search} = this.state;
+        if(!search) return true;
+
+        for(const key in e){
+          if(e[key].toLowerCase().includes(search.toLowerCase()))
+          return true;
+        }
+        return false;
+  };
+
+  handleInputChange =(e)=>{
+    const {name, value}=e.target;
+    this.setState({
+      [name]:value,
+    });
+  }
 
   render() {
+
+    console.log(this.state.results)
+    const rslt = this.state.results;
+    const refnd = rslt.map((emp) => <EmpRow {...emp} />);
+
     return (
       <>
-        <table className="blueTable">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>DOB</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.results.map(emp =>(
-              <EmpRow img= {this.results.picture.thumbnail}/> 
-            ))}
-          </tbody>
-        </table>
+      <SearchBar
+        search={this.state.search}
+        handleInputChange={this.handleInputChange}
+        />
+        <div>
+          <table className="blueTable">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>DOB</th>
+              </tr>
+            </thead>
+            <tbody>
+              {refnd}
+            </tbody>
+          </table>
+        </div>
       </>
     );
   }
 }
-
 
 export default Holder;

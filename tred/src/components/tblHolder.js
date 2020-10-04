@@ -6,9 +6,9 @@ import SearchBar from "./SearchBar.js"; //will need to employe react router here
 
 class Holder extends Component {
   constructor() {
-    super()
-    this.state = {
-      search: "",   //stores original list from API.
+    super();
+    this.state = {  //Do not modify state directly, the only place you can is here in the constructor.
+      search: "",
       results: []
     };
   }
@@ -16,7 +16,7 @@ class Holder extends Component {
   //https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
   //(from the link above) Note that I didn’t use the id option provided in the API due to the fact that it sometimes returns null for some users.So, just to make sure that there will be a unique value for each user, I included the registered option in the API.
   componentDidMount() {
-    axios.get('https://randomuser.me/api/?results=200&inc=name,registered,picture,cell,email,dob,login')
+    axios.get('https://randomuser.me/api/?results=20&inc=name,registered,picture,cell,email,dob,login')
       .then(res => res.data.results.map(result => (
         {
           image: result.picture.thumbnail,
@@ -28,21 +28,22 @@ class Holder extends Component {
           id:result.register
         }
       ))).then(newData => {
-        this.setState({ store: newData, results: newData })
+        this.setState({ results: newData })
       }
       ).catch(err => console.log(err));
     console.log(this.state.results);
-    this.checkResults();
   }
 
-  checkResults() {
-    console.log(this.state.results);
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   filterResults(emp) {
     const {search} = this.state;
     if (!search) return true;
-
     for (const key in emp) {
       if (emp[key].toLowerCase().includes(search.toLowerCase()))
         return true;
@@ -50,18 +51,11 @@ class Holder extends Component {
     return false;
   };
 
-  handleInputChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  }
 
   render() {
 
     console.log(this.state.results)
     const rslt = this.state.results;
-    // let refnd = rslt.map((emp) => <EmpRow {...emp} />);
   
     return (
       <>
@@ -81,7 +75,10 @@ class Holder extends Component {
               </tr>
             </thead>
             <tbody>  
-             {rslt.map((emp)=> <EmpRow{...emp}/>)} 
+             {this.state.search
+                ? rslt.filter(this.filterResults).map((emp)=>(<EmpRow{...emp}/>))
+                : rslt.map((emp)=> <EmpRow{...emp}/>) 
+               }
             </tbody>
           </table>
         </div>

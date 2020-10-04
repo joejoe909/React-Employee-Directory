@@ -1,10 +1,10 @@
 import React from "react";
 
 function EmpRow(props) {
-        let im = <img alt="random user" src = {props.image}/>;
+    let im = <img alt="random user" src={props.image} />;
     return (
         <>
-            <tr key ={props.id}>
+            <tr key={props.id}>
                 <td>{im}</td>
                 <td>{props.name}</td>
                 <td>{props.phone}</td>

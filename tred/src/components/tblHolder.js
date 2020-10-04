@@ -5,8 +5,8 @@ import EmpRow from "./EmpRow"
 import SearchBar from "./SearchBar.js"; //will need to employe react router here
 
 class Holder extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {  //Do not modify state directly, the only place you can is here in the constructor.
       search: "",
       results: []
@@ -25,7 +25,7 @@ class Holder extends Component {
           email: result.email,
           dob: result.dob.date,
           key: result.login.salt,  // I was playing with this but this helps prevent an error
-          id:result.register
+          id: result.register
         }
       ))).then(newData => {
         this.setState({ results: newData })
@@ -42,7 +42,7 @@ class Holder extends Component {
   }
 
   filterResults(emp) {
-    const {search} = this.state;
+    const search = this.state.search;
     if (!search) return true;
     for (const key in emp) {
       if (emp[key].toLowerCase().includes(search.toLowerCase()))
@@ -56,7 +56,7 @@ class Holder extends Component {
 
     console.log(this.state.results)
     const rslt = this.state.results;
-  
+
     return (
       <>
         <SearchBar
@@ -74,11 +74,11 @@ class Holder extends Component {
                 <th>DOB</th>
               </tr>
             </thead>
-            <tbody>  
-             {this.state.search
-                ? rslt.filter(this.filterResults).map((emp)=>(<EmpRow{...emp}/>))
-                : rslt.map((emp)=> <EmpRow{...emp}/>) 
-               }
+            <tbody>
+              {this.state.search
+                ? rslt.filter(this.filterResults(this.state.search)).map((emp) => (<EmpRow{...emp} />))
+                : rslt.map((emp) => <EmpRow{...emp} />)
+              }
             </tbody>
           </table>
         </div>

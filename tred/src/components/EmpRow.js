@@ -4,7 +4,7 @@ function EmpRow(props) {
         let im = <img alt="random user" src = {props.image}/>;
     return (
         <>
-            <tr>
+            <tr key ={props.id}>
                 <td>{im}</td>
                 <td>{props.name}</td>
                 <td>{props.phone}</td>

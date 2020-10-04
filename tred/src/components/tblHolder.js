@@ -13,9 +13,9 @@ class Holder extends Component {
     };
   }
 
-  //https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
+  // https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
   componentDidMount() {
-    axios.get('https://randomuser.me/api/?results=10&inc=name,registered,picture,cell,email,dob')
+    axios.get('https://randomuser.me/api/?results=10&inc=name,registered,picture,cell,email,dob,login')
       .then(res => res.data.results.map(result => (
         {
           image: `${result.picture.thumbnail}`,
@@ -23,10 +23,11 @@ class Holder extends Component {
           phone: `${result.cell}`,
           email: `${result.email}`,
           dob: `${result.dob.date}`,
+          key: `${result.login.salt}`,
           id: result.registered
         }
       ))).then(newData => {
-        this.setState({ store: newData, results: newData })
+        this.setState({ results: newData })
       }
       )
       .catch(err => console.log(err));
@@ -57,11 +58,9 @@ class Holder extends Component {
   }
 
   render() {
-
     console.log(this.state.results)
     const rslt = this.state.results;
-    const refnd = rslt.map((emp) => <EmpRow {...emp} />);
-
+    const refnd = rslt.map((emp) => <EmpRow {...emp} />) 
     return (
       <>
       <SearchBar
@@ -80,7 +79,12 @@ class Holder extends Component {
               </tr>
             </thead>
             <tbody>
-              {refnd}
+                {/* {rslt.length && 
+                rslt.filter(this.filterResults).map((rows)=>(
+                  <EmpRow {...rows}/>
+                ))}    */}
+
+                {refnd}
             </tbody>
           </table>
         </div>

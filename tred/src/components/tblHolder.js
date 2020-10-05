@@ -40,19 +40,46 @@ class Holder extends Component {
     });
   }
 
-  render() {
+  searchMode(search){
+    if(search) return true;
+  }
 
+  filterResults = (emp) => {
+    const { search } = this.state;
+    if (!search) return true;
+
+    for (const key in emp) {
+      if (emp[key].toLowerCase().includes(search.toLowerCase()))
+        return true;
+    }
+
+    return false;
+  };
+
+  render() {
+    // const names = ['James', 'John', 'Paul', 'Ringo', 'George'];
     console.log(this.state.results)
     const {results} = this.state;
-    const {search} = this.state;
-    console.log(search);
+    const searchOn = this.state.search;
+    //console.log(search);
     return (
       <>
+      <div>
         <SearchBar
          search={this.state.search}
           handleInputChange={this.handleInputChange}
         />
+      </div>  
         <div>
+          {/* <div>
+            {names.filter(name => name.includes(search)).map(filteredName => (
+              <li>
+                {filteredName}
+              </li>
+            ))}
+          </div> */}
+
+
           <table className="blueTable">
             <thead>
               <tr>
@@ -64,9 +91,9 @@ class Holder extends Component {
               </tr>
             </thead>
             <tbody>
-              { search.length 
-                ? results.filter(fltVar => fltVar.includes(search)).map((emp) => (<EmpRow{...emp} />))
-                : results.map((emp) => <EmpRow{...emp} />)
+              {searchOn //If ontents in search we run ? else we run :
+                  ? results.filter(this.filterResults(this.state.search)).map((emp) => (<EmpRow{...emp} />))
+                  : results.map((emp) => <EmpRow{...emp} />)
               }
             </tbody>
           </table>

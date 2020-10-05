@@ -46,10 +46,12 @@ class Holder extends Component {
 
   filterResults = (emp) => {
     const { search } = this.state;
+    console.log(emp);
     if (!search) return true;
 
     for (const key in emp) {
       if (emp[key].toLowerCase().includes(search.toLowerCase()))
+
         return true;
     }
 
@@ -60,7 +62,7 @@ class Holder extends Component {
     // const names = ['James', 'John', 'Paul', 'Ringo', 'George'];
     console.log(this.state.results)
     const {results} = this.state;
-    const searchOn = this.state.search;
+    const {search} = this.state;
     //console.log(search);
     return (
       <>
@@ -70,7 +72,7 @@ class Holder extends Component {
           handleInputChange={this.handleInputChange}
         />
       </div>  
-        <div>
+         <div>
           {/* <div>
             {names.filter(name => name.includes(search)).map(filteredName => (
               <li>
@@ -91,8 +93,8 @@ class Holder extends Component {
               </tr>
             </thead>
             <tbody>
-              {searchOn //If ontents in search we run ? else we run :
-                  ? results.filter(this.filterResults(this.state.search)).map((emp) => (<EmpRow{...emp} />))
+              {search
+                  ? results.filter(this.filterResults).map((emp) => (<EmpRow{...emp} />))
                   : results.map((emp) => <EmpRow{...emp} />)
               }
             </tbody>

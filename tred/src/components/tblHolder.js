@@ -13,8 +13,9 @@ class Holder extends Component {
     };
   }
 
-  //https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
-  //(from the link above) Note that I didn’t use the id option provided in the API due to the fact that it sometimes returns null for some users.So, just to make sure that there will be a unique value for each user, I included the registered option in the API.
+ 
+ // https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
+//  (from the link above) Note that I didn’t use the id option provided in the API due to the fact that it sometimes returns null for some users.So, just to make sure that there will be a unique value for each user, I included the registered option in the API.
   componentDidMount() {
     axios.get('https://randomuser.me/api/?results=20&inc=name,registered,picture,cell,email,dob,login')
       .then(res => res.data.results.map(result => (
@@ -41,23 +42,13 @@ class Holder extends Component {
     });
   }
 
-  filterResults(emp) {
-    const search = this.state.search;
-    if (!search) return true;
-    for (const key in emp) {
-      if (emp[key].toLowerCase().includes(search.toLowerCase()))
-        return true;
-    }
-    return false;
-  };
-
 
   render() {
 
     console.log(this.state.results)
-    const results = this.state.results;
+    const {results} = this.state;
     const {search} = this.state;
-
+    console.log(search);
     return (
       <>
         <SearchBar
@@ -76,8 +67,8 @@ class Holder extends Component {
               </tr>
             </thead>
             <tbody>
-              {search.length 
-                ? results.filter(this.filterResults(search)).map((emp) => (<EmpRow{...emp} />))
+              { search.length 
+                ? results.filter(sr=>sr.includes(search)).map((emp) => (<EmpRow{...emp} />))
                 : results.map((emp) => <EmpRow{...emp} />)
               }
             </tbody>

@@ -55,12 +55,13 @@ class Holder extends Component {
   render() {
 
     console.log(this.state.results)
-    const rslt = this.state.results;
+    const results = this.state.results;
+    const {search} = this.state;
 
     return (
       <>
         <SearchBar
-          search={this.state.search}
+         search={this.state.search}
           handleInputChange={this.handleInputChange}
         />
         <div>
@@ -75,9 +76,9 @@ class Holder extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.search
-                ? rslt.filter(this.filterResults(this.state.search)).map((emp) => (<EmpRow{...emp} />))
-                : rslt.map((emp) => <EmpRow{...emp} />)
+              {search.length 
+                ? results.filter(this.filterResults(search)).map((emp) => (<EmpRow{...emp} />))
+                : results.map((emp) => <EmpRow{...emp} />)
               }
             </tbody>
           </table>

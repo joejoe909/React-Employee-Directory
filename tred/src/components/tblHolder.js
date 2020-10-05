@@ -12,9 +12,7 @@ class Holder extends Component {
       results: []
     };
   }
-
- 
- // https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
+// https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
 //  (from the link above) Note that I didn’t use the id option provided in the API due to the fact that it sometimes returns null for some users.So, just to make sure that there will be a unique value for each user, I included the registered option in the API.
   componentDidMount() {
     axios.get('https://randomuser.me/api/?results=20&inc=name,registered,picture,cell,email,dob,login')
@@ -42,7 +40,6 @@ class Holder extends Component {
     });
   }
 
-
   render() {
 
     console.log(this.state.results)
@@ -68,7 +65,7 @@ class Holder extends Component {
             </thead>
             <tbody>
               { search.length 
-                ? results.filter(sr=>sr.includes(search)).map((emp) => (<EmpRow{...emp} />))
+                ? results.filter(fltVar => fltVar.includes(search)).map((emp) => (<EmpRow{...emp} />))
                 : results.map((emp) => <EmpRow{...emp} />)
               }
             </tbody>

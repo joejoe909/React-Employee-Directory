@@ -1,0 +1,39 @@
+.myNavbar {
+  background: blue;
+  height: 400px;
+}
+
+ .h1Color {
+  color:  #F0F0F0;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background: #4E7BA6;
+  font-size: 2rem;
+  text-decoration: none;
+  margin: 0px;
+  line-height: 3;
+} 
+
+.header {
+  background: red;
+  height: 2px;
+}
+
+.header h1 {
+  margin: 0;
+  padding-top: 0px;
+  text-align: center;
+  color: white;
+  font-size: 3rem;
+}
+
+.section {
+  background: green;
+  padding: 0px;
+}
+
+.SearchBar{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+

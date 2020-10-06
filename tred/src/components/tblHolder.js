@@ -11,6 +11,8 @@ class Holder extends Component {
       //Do not modify state directly, the only place you can is here in the constructor.
       search: "",
       results: [],
+      isToggleOn: true,
+
     };
   }
   // https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
@@ -44,8 +46,8 @@ class Holder extends Component {
   };
 
   handleClick=(e)=>{
-    e.preventDefault();
-    alert("A Click event occured");
+    // e.preventDefault();
+    console.log("A Click event occured");
   }
 
   searchMode(search) {
@@ -77,9 +79,9 @@ class Holder extends Component {
         <div>
           <table className="blueTable">
             <thead>
-              <tr>
+              <tr onClick={this.handleClick}>
                 <th>Image</th>
-                <th onClick={handleClick}>Name</th>
+                <th> <button> Name</button></th>
                 <th>Phone</th>
                 <th>Email</th>
                 <th>DOB</th>

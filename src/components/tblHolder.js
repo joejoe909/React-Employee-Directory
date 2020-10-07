@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./tblHolder.css";
 import EmpRow from "./EmpRow";
-import SearchBar from "./SearchBar.js"; //will need to employe react router here
+import SearchBar from "./SearchBar.js"; 
 
 class Holder extends Component {
   constructor(props) {
@@ -11,7 +11,10 @@ class Holder extends Component {
       //Do not modify state directly, the only place you can is here in the constructor.
       search: "",
       results: [],
+      isTggled: true,
+      isAlpha: false,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
   // https://www.medianic.co.uk/introduction-to-api-calls-with-react-and-axios/
   //  (from the link above) Note that I didn’t use the id option provided in the API due to the fact that it sometimes returns null for some users.So, just to make sure that there will be a unique value for each user, I included the registered option in the API.
@@ -42,6 +45,40 @@ class Holder extends Component {
       [name]: value,
     });
   };
+
+  handleClick(){
+    this.setState(state => ({
+      isTggled: !state.isTggled
+      }));
+      this.sortEmps();
+    
+  }
+
+  sortEmps = () =>{
+    const {results} = this.state;
+    const {isAlpha} = this.state;
+    if(!isAlpha){
+      this.setState({isAlpha: true,
+      results: results.sort(function(a, b){
+        const empA = a.name.toLowerCase()
+        const empB = b.name.toLowerCase()
+        if(empA < empB) return -1
+        if(empA > empB) return 1
+        return 0;
+      })
+      });
+    }else if(isAlpha){
+      this.setState({isAlpha: false,
+      results: results.sort(function(a,b){
+       const empA = a.name.toLowerCase()
+       const empB = b.name.toLowerCase()
+       if(empA > empB) return -1;
+       if(empA < empB) return 1;
+       return 0;
+      })
+      })
+    }
+  }
 
   searchMode(search) {
     if (search) return true;
@@ -74,7 +111,7 @@ class Holder extends Component {
             <thead>
               <tr>
                 <th>Image</th>
-                <th>Name</th>
+                <th onClick={this.handleClick}> {this.state.isTggled ? 'Name ↑' : 'Name ↓'} </th>
                 <th>Phone</th>
                 <th>Email</th>
                 <th>DOB</th>

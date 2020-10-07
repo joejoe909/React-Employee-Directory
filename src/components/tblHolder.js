@@ -21,7 +21,7 @@ class Holder extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://randomuser.me/api/?results=20&inc=name,registered,picture,cell,email,dob,login"
+        "https://randomuser.me/api/?results=200&inc=name,registered,picture,cell,email,dob,login"
       )
       .then((res) =>
         res.data.results.map((result) => ({
